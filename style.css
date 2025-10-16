@@ -1,0 +1,849 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: "Poppins", sans-serif;
+    background: url('img/blue-sea.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    text-align: center;
+    height: 100vh;
+    cursor: none;
+}
+
+
+.aquarium {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    transition: filter 0.4s ease, opacity 0.4s ease;
+}
+
+.aquarium.blurred {
+    filter: blur(6px) brightness(0.5);
+    opacity: 0.7;
+}
+
+.aquarium::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 20, 40, 0.5);
+    /* filtre bleu foncé transparent */
+    z-index: 0;
+}
+
+.aquarium::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: 0;
+    width: 100%;
+    height: 150%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, transparent 80%);
+    pointer-events: none;
+    z-index: 0;
+    animation: sunBeam 6s infinite linear;
+}
+
+@keyframes sunBeam {
+    0% { transform: translateY(-10%) scaleX(1.05); }
+    50% { transform: translateY(0%) scaleX(1); }
+    100% { transform: translateY(-10%) scaleX(1.05); }
+}
+
+/* --- Titre flottant et apparition progressive --- */
+#gameTitle {
+    margin-top: 60px;
+    /* un peu plus d'espace */
+    font-weight: 600;
+    letter-spacing: 2px;
+    font-size: 2.5rem;
+    color: #00eaff;
+    text-shadow: 0 0 20px #00ffff, 0 0 40px #0099ff;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+
+#gameTitle span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: appearLetter 0.05s forwards, floatLetter 3s ease-in-out infinite;
+}
+
+@keyframes appearLetter {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes floatLetter {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    25% {
+        transform: translateY(-6px);
+    }
+
+    50% {
+        transform: translateY(0);
+    }
+
+    75% {
+        transform: translateY(6px);
+    }
+}
+
+/* --- Plateau du jeu --- */
+#aquariumCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+#game-board {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 110px);
+    grid-gap: 15px;
+    justify-content: center;
+    margin-top: 40px;
+    z-index: 2;
+}
+
+/* Animation d’arrivée fluide */
+.card {
+    width: 100px;
+    height: 100px;
+    perspective: 1000px;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateX(var(--from-x, 0)) translateY(var(--from-y, 0));
+    animation: swimIn 1.5s ease-out forwards, floatCard 4s ease-in-out infinite;
+}
+
+@keyframes swimIn {
+    0% {
+        opacity: 0;
+        transform: translateX(var(--from-x)) translateY(var(--from-y)) scale(0.8);
+    }
+
+    70% {
+        opacity: 1;
+        transform: translateX(10px) translateY(-10px) scale(1.05);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0) translateY(0) scale(1);
+    }
+}
+
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: "Poppins", sans-serif;
+    background: url('img/blue-sea.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    text-align: center;
+    height: 100vh;
+    cursor: none;
+}
+
+
+.aquarium {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    transition: filter 0.4s ease, opacity 0.4s ease;
+}
+
+.aquarium.blurred {
+    filter: blur(6px) brightness(0.5);
+    opacity: 0.7;
+}
+
+.aquarium::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 20, 40, 0.5);
+    /* filtre bleu foncé transparent */
+    z-index: 0;
+}
+
+.aquarium::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: 0;
+    width: 100%;
+    height: 150%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, transparent 80%);
+    pointer-events: none;
+    z-index: 0;
+    animation: sunBeam 6s infinite linear;
+}
+
+@keyframes sunBeam {
+    0% { transform: translateY(-10%) scaleX(1.05); }
+    50% { transform: translateY(0%) scaleX(1); }
+    100% { transform: translateY(-10%) scaleX(1.05); }
+}
+
+/* --- Titre flottant et apparition progressive --- */
+#gameTitle {
+    margin-top: 60px;
+    /* un peu plus d'espace */
+    font-weight: 600;
+    letter-spacing: 2px;
+    font-size: 2.5rem;
+    color: #00eaff;
+    text-shadow: 0 0 20px #00ffff, 0 0 40px #0099ff;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+
+#gameTitle span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: appearLetter 0.05s forwards, floatLetter 3s ease-in-out infinite;
+}
+
+@keyframes appearLetter {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes floatLetter {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    25% {
+        transform: translateY(-6px);
+    }
+
+    50% {
+        transform: translateY(0);
+    }
+
+    75% {
+        transform: translateY(6px);
+    }
+}
+
+/* --- Plateau du jeu --- */
+#aquariumCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+#game-board {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 110px);
+    grid-gap: 15px;
+    justify-content: center;
+    margin-top: 40px;
+    z-index: 2;
+}
+
+/* Animation d’arrivée fluide */
+.card {
+    width: 100px;
+    height: 100px;
+    perspective: 1000px;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateX(var(--from-x, 0)) translateY(var(--from-y, 0));
+    animation: swimIn 1.5s ease-out forwards, floatCard 4s ease-in-out infinite;
+}
+
+@keyframes swimIn {
+    0% {
+        opacity: 0;
+        transform: translateX(var(--from-x)) translateY(var(--from-y)) scale(0.8);
+    }
+
+    70% {
+        opacity: 1;
+        transform: translateX(10px) translateY(-10px) scale(1.05);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0) translateY(0) scale(1);
+    }
+}
+
+@keyframes floatCard {
+    0%, 100% { transform: translateY(0); }
+    25% { transform: translateY(-5px); }
+    50% { transform: translateY(0); }
+    75% { transform: translateY(5px); }
+}
+
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.card.flip .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    backface-visibility: hidden;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+}
+
+.card-front {
+    background: rgba(1, 20, 39, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.card-back {
+    transform: rotateY(180deg);
+    overflow: hidden;
+}
+
+.card-back img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.card.matched .card-inner {
+    animation: sparkle 1s ease-in-out;
+}
+
+@keyframes sparkle {
+    0% {
+        box-shadow: 0 0 5px #00ffff;
+    }
+
+    50% {
+        box-shadow: 0 0 25px #00ffff;
+    }
+
+    100% {
+        box-shadow: 0 0 5px #00ffff;
+    }
+}
+
+/* Curseur personnalisé */
+#customCursor {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(0, 255, 255, 0.5);
+    border-radius: 50%;
+    background: radial-gradient(circle at center, rgba(0, 255, 255, 0.3) 0%, transparent 70%);
+    box-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: transform 0.08s ease-out;
+    mix-blend-mode: screen;
+    z-index: 999;
+}
+
+/* Message victoire et bouton */
+#winMessage {
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    color: #00eaff;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-shadow: 0 0 20px #00ffff, 0 0 40px #00aaff;
+    opacity: 0;
+    transition: all 0.6s ease-out;
+    z-index: 2000;
+}
+
+#winMessage.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+#restartButton {
+    position: fixed;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 234, 255, 0.95);
+    color: #001f3f;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 24px;
+    font-size: 1.3rem;
+    cursor: pointer;
+    box-shadow: 0 0 20px #00ffff;
+    transition: all 0.3s;
+    opacity: 0;
+    z-index: 3000;
+}
+
+#restartButton.show {
+    opacity: 1;
+}
+
+/* Confettis */
+.confetti {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 200, 255, 0.8) 0%, rgba(0, 100, 255, 0.4) 100%);
+    top: -10px;
+    pointer-events: none;
+    opacity: 0.8;
+    z-index: 999;
+    animation: fall 3s linear forwards;
+    filter: blur(0.5px);
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(100vh) rotate(720deg) scale(0.8);
+        opacity: 0;
+    }
+}
+
+h1 {
+    position: relative;
+    display: inline-block;
+    margin-top: 40px;
+    font-size: 2.5rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: #e0faff;
+    text-shadow: 0 0 15px #00eaff, 0 0 30px rgba(0, 150, 255, 0.6);
+    animation: floating 3s ease-in-out infinite;
+}
+
+/* Animation flottante douce du titre */
+@keyframes floating {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+@keyframes lightSweep {
+    0% {
+        left: -150%;
+    }
+
+    50% {
+        left: 150%;
+    }
+
+    100% {
+        left: 150%;
+    }
+}
+
+
+/* --- Footer --- */
+footer {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    color: rgba(200, 240, 255, 0.8);
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-shadow: 0 0 5px #023853;
+    z-index: 5;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.card.flip .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    backface-visibility: hidden;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+}
+
+.card-front {
+    background: rgba(1, 20, 39, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.card-back {
+    transform: rotateY(180deg);
+    overflow: hidden;
+}
+
+.card-back img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.card.matched .card-inner {
+    animation: sparkle 1s ease-in-out;
+}
+
+@keyframes sparkle {
+    0% {
+        box-shadow: 0 0 5px #00ffff;
+    }
+
+    50% {
+        box-shadow: 0 0 25px #00ffff;
+    }
+
+    100% {
+        box-shadow: 0 0 5px #00ffff;
+    }
+}
+
+/* Curseur personnalisé */
+#customCursor {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(0, 255, 255, 0.5);
+    border-radius: 50%;
+    background: radial-gradient(circle at center, rgba(0, 255, 255, 0.3) 0%, transparent 70%);
+    box-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: transform 0.08s ease-out;
+    mix-blend-mode: screen;
+    z-index: 999;
+}
+
+/* Message victoire et bouton */
+#winMessage {
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    color: #00eaff;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-shadow: 0 0 20px #00ffff, 0 0 40px #00aaff;
+    opacity: 0;
+    transition: all 0.6s ease-out;
+    z-index: 2000;
+}
+
+#winMessage.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+#restartButton {
+    position: fixed;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 234, 255, 0.95);
+    color: #001f3f;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 24px;
+    font-size: 1.3rem;
+    cursor: pointer;
+    box-shadow: 0 0 20px #00ffff;
+    transition: all 0.3s;
+    opacity: 0;
+    z-index: 3000;
+}
+
+#restartButton.show {
+    opacity: 1;
+}
+
+/* Confettis */
+.confetti {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 200, 255, 0.8) 0%, rgba(0, 100, 255, 0.4) 100%);
+    top: -10px;
+    pointer-events: none;
+    opacity: 0.8;
+    z-index: 999;
+    animation: fall 3s linear forwards;
+    filter: blur(0.5px);
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(100vh) rotate(720deg) scale(0.8);
+        opacity: 0;
+    }
+}
+
+h1 {
+    position: relative;
+    display: inline-block;
+    margin-top: 40px;
+    font-size: 2.5rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: #e0faff;
+    text-shadow: 0 0 15px #00eaff, 0 0 30px rgba(0, 150, 255, 0.6);
+    animation: floating 3s ease-in-out infinite;
+}
+
+/* Animation flottante douce du titre */
+@keyframes floating {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+@keyframes lightSweep {
+    0% {
+        left: -150%;
+    }
+
+    50% {
+        left: 150%;
+    }
+
+    100% {
+        left: 150%;
+    }
+}
+
+
+/* --- Footer --- */
+footer {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    color: rgba(200, 240, 255, 0.8);
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-shadow: 0 0 5px #023853;
+    z-index: 5;
+}
+
+/* --- Responsive pour mobile --- */
+@media (max-width: 600px) {
+#game-board {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-gap: 15px;
+    justify-content: center;
+    margin-top: 40px;
+    z-index: 2;
+}
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: "Poppins", sans-serif;
+    background: url('img/blue-sea.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    text-align: center;
+    height: 100vh;
+    cursor: none;
+}
+
+.aquarium {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#aquariumCanvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 1;
+}
+
+#game-board {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 110px);
+    grid-gap: 15px;
+    justify-content: center;
+    margin-top: 40px;
+    z-index: 2;
+}
+
+.card {
+    width: 100px;
+    height: 100px;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.card.flip .card-inner { transform: rotateY(180deg); }
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%; height: 100%;
+    border-radius: 12px;
+    backface-visibility: hidden;
+}
+
+.card-front {
+    background: rgba(1,20,39,0.8);
+    border: 2px solid rgba(255,255,255,0.2);
+}
+
+.card-back {
+    transform: rotateY(180deg);
+    overflow: hidden;
+}
+
+.card-back img {
+    width: 100%; height: 100%; object-fit: cover;
+    border-radius: 12px;
+}
+
+/* Curseur personnalisé */
+#customCursor {
+    position: absolute;
+    width: 16px; height: 16px;
+    border: 2px solid rgba(0,255,255,0.5);
+    border-radius: 50%;
+    background: radial-gradient(circle at center, rgba(0,255,255,0.3) 0%, transparent 70%);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+}
+
+/* Titre */
+#gameTitle {
+    margin-top: 60px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    font-size: 2.5rem;
+    color: #00eaff;
+    text-shadow: 0 0 20px #00ffff, 0 0 40px #0099ff;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+
+    .card {
+        width: 70px;
+        height: 70px;
+    }
+
+    .card-inner {
+        width: 100%;
+        height: 100%;
+    }
+
+    #gameTitle {
+        font-size: 1.8rem;
+        margin-top: 20px;
+    }
+
+    #winMessage {
+        font-size: 1.8rem;
+    }
+
+    #restartButton {
+        font-size: 1rem;
+        padding: 8px 16px;
+    }
+}
+
+/* Optionnel : masquer le curseur sur mobile */
+@media (hover: none) {
+    #customCursor {
+        display: none;
+    }
+}
+
